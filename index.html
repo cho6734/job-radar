@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>헤드헌팅 매칭 대시보드</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:#f5f6f8; color:#1d2129;
+    font-family:-apple-system,BlinkMacSystemFont,"Malgun Gothic","Apple SD Gothic Neo",sans-serif; font-size:14px; line-height:1.5; }
+  .wrap { max-width:1000px; margin:0 auto; padding:20px 16px 60px; }
+  h1 { font-size:20px; margin:0 0 2px; }
+  .sub { color:#65676b; font-size:12px; margin-bottom:16px; }
+  .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:18px; }
+  .stat { background:#fff; border:1px solid #e4e6eb; border-radius:10px; padding:12px 14px; }
+  .stat .n { font-size:22px; font-weight:700; }
+  .stat .l { font-size:11px; color:#65676b; }
+  .controls { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:16px; }
+  .controls input[type=text], .controls select { padding:7px 10px; border:1px solid #ccd0d5; border-radius:8px; font-size:13px; background:#fff; }
+  .chip { border:1px solid #ccd0d5; background:#fff; color:#1d2129; border-radius:999px; padding:6px 12px; font-size:12px; cursor:pointer; user-select:none; }
+  .chip.on { background:#1877f2; color:#fff; border-color:#1877f2; }
+  .slider-wrap { display:flex; align-items:center; gap:6px; font-size:12px; color:#65676b; }
+  .card { background:#fff; border:1px solid #e4e6eb; border-radius:12px; padding:14px 16px; margin-bottom:10px;
+    display:grid; grid-template-columns:64px 1fr auto; gap:14px; align-items:center; }
+  .scorebox { text-align:center; }
+  .scorebox .v { font-size:22px; font-weight:800; line-height:1; }
+  .scorebox .b { font-size:10px; color:#65676b; margin-top:2px; }
+  .s-hi .v { color:#1e8e3e; } .s-mid .v { color:#e8830c; } .s-lo .v { color:#9aa0a6; }
+  .title { font-weight:600; font-size:15px; }
+  .company { color:#65676b; font-size:13px; margin-top:1px; }
+  .reasons { margin-top:6px; display:flex; flex-wrap:wrap; gap:4px; }
+  .rk { background:#eef3ff; color:#1d4ed8; border-radius:6px; padding:2px 7px; font-size:11px; }
+  .meta { font-size:11px; color:#8a8d91; margin-top:5px; }
+  .right { display:flex; flex-direction:column; gap:6px; align-items:flex-end; }
+  .src { font-size:11px; color:#65676b; }
+  .badge-new { background:#fde2e2; color:#c0322b; border-radius:6px; padding:1px 7px; font-size:10px; font-weight:700; }
+  .right select { padding:5px 8px; border:1px solid #ccd0d5; border-radius:7px; font-size:12px; background:#fff; }
+  .right a { font-size:12px; color:#1877f2; text-decoration:none; }
+  .empty { text-align:center; color:#8a8d91; padding:40px; }
+  @media (max-width:640px){ .stats{grid-template-columns:repeat(2,1fr);} .card{grid-template-columns:52px 1fr;}
+    .right{grid-column:1/-1; flex-direction:row; align-items:center; justify-content:space-between;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🎯 헤드헌팅 매칭 대시보드</h1>
+  <div class="sub">사람인 · 비즈니스피플 통합 · 생성 2026-07-03 08:30</div>
+  <div class="stats" id="stats"></div>
+  <div class="controls">
+    <input type="text" id="q" placeholder="회사·직책 검색">
+    <span class="chip on" data-site="all">전체</span>
+    <span class="chip" data-site="사람인">사람인</span>
+    <span class="chip" data-site="비즈니스피플">비즈니스피플</span>
+    <span class="slider-wrap">최소점수 <input type="range" id="minscore" min="0" max="100" value="0" step="5"> <b id="minlbl">0</b></span>
+    <select id="statusf">
+      <option value="all">상태: 전체</option><option value="new">신규</option><option value="active">확인전</option>
+      <option value="관심">관심</option><option value="지원함">지원함</option><option value="제외">제외</option>
+    </select>
+    <select id="sort"><option value="score">점수 높은순</option><option value="recent">최근 발견순</option></select>
+  </div>
+  <div id="list"></div>
+</div>
+<script>
+const DATA = {"generated_at": "2026-07-03 08:30", "stats": {"saramin": 274, "bizpeople": 385, "duplicates": 328, "passed": 3, "new": 0, "old": 2, "date": "2026-07-03"}, "jobs": [{"company": "퍼솔켈리코리아(유)", "title": "[생활용품 브랜드사] 비즈니스 사업 총괄(COO)", "sector": "영업관리영업전략온라인영업경영기획브랜드기획 외", "source": "", "link": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54322721", "score": 90, "score_method": "lexical", "match_reason": ["총괄", "COO", "온라인", "생활용품", "브랜드"], "first_seen": "2026-07-01", "last_seen": "2026-07-03", "status": "new"}, {"company": "(주)커리어멘토", "title": "식품 B2C영업본부장", "sector": "식품/음료영업", "source": "", "link": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54324696", "score": 75, "score_method": "lexical", "match_reason": ["본부장", "식품", "영업"], "first_seen": "2026-07-01", "last_seen": "2026-07-03", "status": "new"}, {"company": "(주)하이스트컨설팅그룹", "title": "매출 200억 패션전문기업 상품전략본부장", "sector": "상품기획", "source": "", "link": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54351454", "score": 60, "score_method": "lexical", "match_reason": ["본부장", "패션"], "first_seen": "2026-07-03", "last_seen": "2026-07-03", "status": "new"}]};
+const STORE_KEY = "headhunter_status_overrides";
+let SITE = "all";
+function loadOverrides(){ try { return JSON.parse(localStorage.getItem(STORE_KEY) || "{}"); } catch(e){ return {}; } }
+function saveOverride(link, status){ const o = loadOverrides(); o[link] = status; localStorage.setItem(STORE_KEY, JSON.stringify(o)); }
+function scoreClass(s){ return s>=70?"s-hi":(s>=40?"s-mid":"s-lo"); }
+function esc(t){ return String(t==null?"":t).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c])); }
+function effectiveStatus(j){ const o=loadOverrides(); return o[j.link] || j.status || "active"; }
+function render(){
+  const stats = DATA.stats || {};
+  document.getElementById("stats").innerHTML = `
+    <div class="stat"><div class="n">${stats.saramin??"-"}</div><div class="l">사람인 수집</div></div>
+    <div class="stat"><div class="n">${stats.bizpeople??"-"}</div><div class="l">비즈니스피플 수집</div></div>
+    <div class="stat"><div class="n">${stats.passed??"-"}</div><div class="l">매칭 통과</div></div>
+    <div class="stat"><div class="n">${stats.new??"-"}</div><div class="l">오늘 신규</div></div>`;
+  const q = document.getElementById("q").value.trim().toLowerCase();
+  const minScore = +document.getElementById("minscore").value;
+  const statusF = document.getElementById("statusf").value;
+  const sort = document.getElementById("sort").value;
+  let jobs = (DATA.jobs || []).slice().filter(j => {
+    if (SITE!=="all" && (j.source||"")!==SITE) return false;
+    if ((j.score||0) < minScore) return false;
+    if (statusF!=="all" && effectiveStatus(j)!==statusF) return false;
+    if (q && !(`${j.company} ${j.title} ${j.sector}`.toLowerCase().includes(q))) return false;
+    return true;
+  });
+  jobs.sort((a,b)=> sort==="recent" ? String(b.first_seen||"").localeCompare(String(a.first_seen||"")) : (b.score||0)-(a.score||0));
+  const list = document.getElementById("list");
+  if(!jobs.length){ list.innerHTML = `<div class="empty">조건에 맞는 공고가 없습니다.</div>`; return; }
+  list.innerHTML = jobs.map(j => {
+    const st = effectiveStatus(j);
+    const reasons = (j.match_reason||[]).map(r=>`<span class="rk">${esc(r)}</span>`).join("");
+    const opts = ["new","active","관심","지원함","제외"].map(v=>{
+      const label = {new:"신규",active:"확인전","관심":"관심","지원함":"지원함","제외":"제외"}[v];
+      return `<option value="${v}" ${v===st?"selected":""}>${label}</option>`;
+    }).join("");
+    return `<div class="card ${scoreClass(j.score||0)}">
+      <div class="scorebox"><div class="v">${j.score??0}</div><div class="b">적합도</div></div>
+      <div><div class="title">${esc(j.title)} ${j.status==="new"?'<span class="badge-new">NEW</span>':""}</div>
+        <div class="company">${esc(j.company)} · <span style="color:#9aa0a6">${esc(j.sector)}</span></div>
+        <div class="reasons">${reasons}</div>
+        <div class="meta">발견 ${esc(j.first_seen||"-")}</div></div>
+      <div class="right"><span class="src">${esc(j.source||"")}</span>
+        <select data-link="${esc(j.link)}" class="stsel">${opts}</select>
+        <a href="${esc(j.link)}" target="_blank" rel="noopener">공고 보기 ↗</a></div>
+    </div>`;
+  }).join("");
+  list.querySelectorAll(".stsel").forEach(sel=> sel.addEventListener("change", e=>{ saveOverride(e.target.getAttribute("data-link"), e.target.value); render(); }));
+}
+document.querySelectorAll(".chip").forEach(c=> c.addEventListener("click", ()=>{ document.querySelectorAll(".chip").forEach(x=>x.classList.remove("on")); c.classList.add("on"); SITE=c.getAttribute("data-site"); render(); }));
+["q","statusf","sort"].forEach(id=>document.getElementById(id).addEventListener("input", render));
+document.getElementById("minscore").addEventListener("input", e=>{ document.getElementById("minlbl").textContent=e.target.value; render(); });
+render();
+</script>
+</body>
+</html>
