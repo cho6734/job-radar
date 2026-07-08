@@ -45,7 +45,7 @@
 <body>
 <div class="wrap">
   <h1>🎯 헤드헌팅 매칭 대시보드</h1>
-  <div class="sub">사람인 · 비즈니스피플 통합 · 생성 2026-07-08 15:00</div>
+  <div class="sub">사람인 · 비즈니스피플 통합 · 생성 2026-07-08 18:00</div>
   <div class="stats" id="stats"></div>
   <div class="controls">
     <input type="text" id="q" placeholder="회사·직책 검색">
@@ -62,7 +62,7 @@
   <div id="list"></div>
 </div>
 <script>
-const DATA = {"generated_at": "2026-07-08 15:00", "stats": {"saramin": 306, "bizpeople": 874, "duplicates": 749, "passed": 2, "new": 0, "old": 2, "date": "2026-07-08"}, "jobs": [{"company": "퍼솔켈리코리아(유)", "title": "[생활용품 브랜드사] 비즈니스 사업 총괄(COO)", "sector": "영업관리영업전략온라인영업경영기획브랜드기획 외", "source": "", "link": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54322721", "score": 90, "score_method": "lexical", "match_reason": ["총괄", "COO", "온라인", "생활용품", "브랜드"], "first_seen": "2026-07-01", "last_seen": "2026-07-08", "status": "new"}, {"company": "(주)스카우트", "title": "코스닥상장기업 패션 리테일 최고운영책임자 (COO)", "sector": "COO경영분석경영혁신(PI)실적관리조직관리 외", "source": "", "link": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54364318", "score": 75, "score_method": "lexical", "match_reason": ["COO", "패션", "리테일"], "first_seen": "2026-07-04", "last_seen": "2026-07-08", "status": "new"}]};
+const DATA = {"generated_at": "2026-07-08 18:00", "stats": {"saramin": 279, "bizpeople": 133, "duplicates": 111, "passed": 2, "new": 0, "old": 2, "date": "2026-07-08"}, "jobs": [{"company": "퍼솔켈리코리아(유)", "title": "[생활용품 브랜드사] 비즈니스 사업 총괄(COO)", "sector": "영업관리영업전략온라인영업경영기획브랜드기획 외", "source": "", "link": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54322721", "score": 90, "score_method": "lexical", "match_reason": ["총괄", "COO", "온라인", "생활용품", "브랜드"], "first_seen": "2026-07-01", "last_seen": "2026-07-08", "status": "new"}, {"company": "(주)스카우트", "title": "코스닥상장기업 패션 리테일 최고운영책임자 (COO)", "sector": "COO경영분석경영혁신(PI)실적관리조직관리 외", "source": "", "link": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54364318", "score": 75, "score_method": "lexical", "match_reason": ["COO", "패션", "리테일"], "first_seen": "2026-07-04", "last_seen": "2026-07-08", "status": "new"}]};
 const STORE_KEY = "headhunter_status_overrides";
 let SITE = "all";
 function loadOverrides(){ try { return JSON.parse(localStorage.getItem(STORE_KEY) || "{}"); } catch(e){ return {}; } }
